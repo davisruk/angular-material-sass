@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink);
+$warn: mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+.deep-purple-amber {
+    color: $light-primary-text;
+    $dark-primary: mat-palette($mat-deep-purple);
+    $dark-accent: mat-palette($mat-amber);
+    $dark-warn: mat-palette($mat-red);
+    $deep-purple-amber-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+    @include angular-material-theme($deep-purple-amber-theme);
+}
+
+.pink-blue-grey {
+    color: $light-primary-text;
+    $dark-primary: mat-palette($mat-pink);
+    $dark-accent: mat-palette($mat-blue-grey);
+    $dark-warn: mat-palette($mat-red);
+    $pink-blue-grey-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+    @include angular-material-theme($pink-blue-grey-theme);
+}
+
+.purple-green {
+    color: $light-primary-text;
+    $dark-primary: mat-palette($mat-purple);
+    $dark-accent: mat-palette($mat-green);
+    $dark-warn: mat-palette($mat-red);
+    $purple-green-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+    @include angular-material-theme($purple-green-theme);
+}

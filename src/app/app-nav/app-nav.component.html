@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="isHandSet ? 'dialog' : 'navigation'"
+    [mode]="(isHandSet | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandSet | async)!.matches">
+
+    <!-- Sidebar Section that covers the left
+          hand side of the main Toolbar -->
+    <mat-toolbar color="primary">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="handleMenuButtonClick()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      {{appTitle}}
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <a *ngFor="let menuItem of sidebarMenu" mat-list-item href='#'>{{menuItem.title}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="handleMenuButtonClick()"
+        *ngIf="showToolbarButton">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div *ngIf="showToolbarButton">
+        {{appTitle}}
+      </div>
+      <div *ngIf="!(isHandSet | async)!.matches">
+          <a  *ngFor="let menuItem of toolbarMenu" mat-button href='#'>{{menuItem.title}}</a>
+      </div>
+      <app-theme-picker></app-theme-picker>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
