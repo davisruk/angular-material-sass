@@ -1,18 +1,13 @@
-
-<mat-menu #themeMenu="matMenu">
-  <button mat-menu-item *ngFor="let theme of themeOptions"
-    (click)="changeTheme(theme)">
-      {{theme.text}}</button>
-</mat-menu>
-<button mat-icon-button [matMenuTriggerFor]="themeMenu">
-  <mat-icon>format_paint</mat-icon>
-</button>
-
-<!--
-<mat-grid-list *ngIf="showGridList" cols="2" rowHeight="100px">
-  <mat-grid-tile *ngFor="let tile of tiles" [colspan] = 1 [rowspan] = 1>
-    {{tile.text}}
-  </mat-grid-tile>
-</mat-grid-list>
--->
+<div class="themePicker">
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let tile of tiles" [ngClass]="tile.class" [colspan] = 1 [rowspan] = 1>
+      <button mat-mini-fab 
+              [ngClass]="tile.secondary"
+              color="accent"
+              value="tile.text"
+              (click)="changeTheme(tile)">
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
 

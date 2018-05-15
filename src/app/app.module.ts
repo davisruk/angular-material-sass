@@ -13,7 +13,8 @@ import { MatToolbarModule,
          MatFormFieldModule,
          MatSelectModule,
          MatMenuModule,
-        MatGridListModule
+        MatGridListModule,
+        MatCardModule
        } from '@angular/material';
 import { CoreModule } from './core/core.module';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
@@ -38,6 +39,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
     MatSelectModule,
     MatGridListModule,
     MatMenuModule,
+    MatCardModule,
     CoreModule
   ],
   providers: [],

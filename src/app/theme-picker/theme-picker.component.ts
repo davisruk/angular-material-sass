@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ThemeService } from '../core/services/theme.service';
 import { ThemeOption } from './theme-option';
-import { MatSelect, MatSelectChange } from '@angular/material';
+import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
 
 @Component({
   selector: 'app-theme-picker',
@@ -10,18 +10,11 @@ import { MatSelect, MatSelectChange } from '@angular/material';
   styleUrls: ['./theme-picker.component.scss']
 })
 export class ThemePickerComponent implements OnInit {
-  themeOptions: ThemeOption[] = [
-    {value: -1, text: 'Indigo Pink'},
-    {value: 0, text: 'Deep Purple Amber'},
-    {value: 1, text: 'Pink Blue Grey'},
-    {value: 2, text: 'Purple Green'}
-  ];
-
-  tiles = [
-    {text: 'Indigo Pink', cols: 1, rows: 1, color: 'indigo'},
-    {text: 'Deep Purple Amber', cols: 1, rows: 1, color: 'purple'},
-    {text: 'Pink Blue Grey', cols: 1, rows: 1, color: 'pink'},
-    {text: 'Purple Green', cols: 1, rows: 1, color: 'pink'},
+  tiles: ThemeOption[] = [
+    {text: 'Indigo Pink', cols: 1, rows: 1, class: 'indigo-theme', secondary: 'indigo-pink', value: -1},
+    {text: 'Deep Purple Amber', cols: 1, rows: 1, class: 'deep-purple-theme', secondary: 'purple-amber', value: 0},
+    {text: 'Pink Blue Grey', cols: 1, rows: 1, class: 'pink-theme', secondary: 'pink-blue', value: 1},
+    {text: 'Purple Green', cols: 1, rows: 1, class: 'purple-theme', secondary: 'purple-green', value: 2},
   ];
 
   styleTheme: Observable<string>;

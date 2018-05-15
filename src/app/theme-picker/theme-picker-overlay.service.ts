@@ -10,9 +10,7 @@ interface ThemePickerOverlayConfig {
 }
 
 const DEFAULT_CONFIG: ThemePickerOverlayConfig = {
-  hasBackdrop: false,
-  backdropClass: 'dark-backdrop',
-  panelClass: 'tm-file-preview-dialog-panel'
+  hasBackdrop: false
 };
 
 export class ThemePickerOverlayRef {
@@ -25,26 +23,35 @@ export class ThemePickerOverlayRef {
 @Injectable({
   providedIn: 'root'
 })
-export class ThemePickerOverlayServiceService {
+export class ThemePickerOverlayService {
 
   constructor(private overlay: Overlay) { }
   parent: ElementRef;
 
   open(parent: ElementRef, config?: ThemePickerOverlayConfig): ThemePickerOverlayRef {
+    // need the parent for the position information
     this.parent = parent;
     const themePickerConfig = { ...DEFAULT_CONFIG, ...config };
     const overlayRef = this.createOverlay(themePickerConfig);
     const themePickerPortal = new ComponentPortal (ThemePickerComponent);
-    const themePickerOverlayRef = new ThemePickerOverlayRef(overlayRef);
     overlayRef.attach(themePickerPortal);
+    const themePickerOverlayRef = new ThemePickerOverlayRef(overlayRef);
+
+    // this should close the overlay if a click is detected outside - doesn't work since converting to
+    // flexible connected strategy
     overlayRef.backdropClick().subscribe(_ => themePickerOverlayRef.close());
     return themePickerOverlayRef;
+  }
+
+  private createOverlay(config: ThemePickerOverlayConfig) {
+    const overlayConfig = this.getOverlayConfig(config);
+    return this.overlay.create(overlayConfig);
   }
 
   private getOverlayConfig(config: ThemePickerOverlayConfig): OverlayConfig {
     const pos: ConnectedPosition[] = [{offsetX: 0, offsetY: 0,
                                        originX: 'start', originY: 'bottom',
-                                       overlayX: 'start', overlayY: 'bottom'}];
+                                       overlayX: 'start', overlayY: 'top'}];
     const positionStrategy = this.overlay.position()
       .flexibleConnectedTo(this.parent)
       .withPositions(pos);
@@ -53,20 +60,12 @@ export class ThemePickerOverlayServiceService {
       hasBackdrop: config.hasBackdrop,
       backdropClass: config.backdropClass,
       panelClass: config.panelClass,
-      height: '200',
-      width: '200',
+      height: '100px',
       scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy
     });
 
     return overlayConfig;
-
   }
-
-  private createOverlay(config: ThemePickerOverlayConfig) {
-    const overlayConfig = this.getOverlayConfig(config);
-    return this.overlay.create(overlayConfig);
-  }
-
 }
 
