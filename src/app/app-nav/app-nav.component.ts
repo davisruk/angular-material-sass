@@ -5,6 +5,8 @@ import { MenuItem } from '../menu/model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemeService } from '../core/services/theme.service';
+import { ThemePickerOverlayServiceService, ThemePickerOverlayRef } from '../theme-picker/theme-picker-overlay-service.service';
+import { MatButton } from '@angular/material';
 
 @Component({
   selector: 'app-nav',
@@ -15,6 +17,7 @@ import { ThemeService } from '../core/services/theme.service';
 export class AppNavComponent implements OnInit {
 
   @ViewChild('drawer') drawer: MatSidenav;
+  @ViewChild('themeButton') themeButton: MatButton;
   isHandSet: Observable<BreakpointState>;
   showToolbarButton = false;
   sidebarMenu: MenuItem[];
@@ -22,7 +25,8 @@ export class AppNavComponent implements OnInit {
   initSideMenu: MenuItem[] = [{title: 'Patients'}, {title: 'Prescriptions'}, {title: 'Stores'}];
   appTitle = 'Material Test';
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver,
+              private themePickerService: ThemePickerOverlayServiceService) {
     this.isHandSet = this.breakpointObserver.observe(Breakpoints.HandsetPortrait);
 
     this.isHandSet.subscribe((state: BreakpointState) => {
@@ -38,5 +42,14 @@ export class AppNavComponent implements OnInit {
   handleMenuButtonClick() {
     this.drawer.toggle();
     this.showToolbarButton = !(this.drawer.opened);
+  }
+
+  openThemePicker() {
+    const overlayRef: ThemePickerOverlayRef = this.themePickerService.open(this.themeButton._elementRef);
+/*
+    setTimeout(() => {
+      overlayRef.close();
+    }, 2000);
+  */
   }
 }

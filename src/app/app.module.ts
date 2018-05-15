@@ -41,6 +41,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
     CoreModule
   ],
   providers: [],
+  entryComponents: [ThemePickerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

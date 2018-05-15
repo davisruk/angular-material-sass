@@ -41,7 +41,12 @@
       <div *ngIf="!(isHandSet | async)!.matches">
           <a  *ngFor="let menuItem of toolbarMenu" mat-button href='#'>{{menuItem.title}}</a>
       </div>
+      <button #themeButton mat-icon-button (click)="openThemePicker()">
+        <mat-icon>format_paint</mat-icon>
+      </button>
+      <!--            
       <app-theme-picker></app-theme-picker>
+      -->
     </mat-toolbar>
   </mat-sidenav-content>
 </mat-sidenav-container>

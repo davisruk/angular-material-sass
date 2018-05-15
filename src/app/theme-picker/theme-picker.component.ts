@@ -35,10 +35,6 @@ export class ThemePickerComponent implements OnInit {
     this.styleTheme = this.themeService.styleClass;
   }
 
-  handleThemeChange(event: MatSelectChange) {
-     this.themeService.setStyleClass(event.value === -1 ? null : this.styleThemes[event.value]);
-     this.chosenTheme = event.value;
-  }
   changeTheme(theme: ThemeOption) {
     this.themeService.setStyleClass(theme.value === -1 ? null : this.styleThemes[theme.value]);
     this.chosenTheme = theme.value;

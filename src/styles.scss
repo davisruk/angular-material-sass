@@ -1,2 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import './styles/material-theme';
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    &.dark-backdrop {
+      background: #000;
+      opacity: 0.85 !important;
+    }
+  }
