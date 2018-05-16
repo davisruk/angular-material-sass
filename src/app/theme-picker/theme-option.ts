@@ -5,4 +5,5 @@ export class ThemeOption {
     class: string;
     secondary: string;
     value: number;
+    isDark: boolean;
 }

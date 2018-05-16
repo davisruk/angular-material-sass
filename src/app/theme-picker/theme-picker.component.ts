@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ThemeService } from '../core/services/theme.service';
 import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
@@ -11,25 +11,53 @@ import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker
 })
 export class ThemePickerComponent implements OnInit {
   tiles: ThemeOption[] = [
-    {text: 'Indigo Pink', cols: 1, rows: 1, class: 'indigo-theme', secondary: 'indigo-pink', value: -1},
-    {text: 'Deep Purple Amber', cols: 1, rows: 1, class: 'deep-purple-theme', secondary: 'purple-amber', value: 0},
-    {text: 'Pink Blue Grey', cols: 1, rows: 1, class: 'pink-theme', secondary: 'pink-blue', value: 1},
-    {text: 'Purple Green', cols: 1, rows: 1, class: 'purple-theme', secondary: 'purple-green', value: 2},
+    {text: 'Indigo Pink', cols: 1, rows: 1, class: 'indigo-theme', secondary: 'indigo-pink', value: 0, isDark: false},
+    {text: 'Deep Purple Amber', cols: 1, rows: 1, class: 'deep-purple-theme', secondary: 'purple-amber', value: 1, isDark: false},
+    {text: 'Pink Blue Grey', cols: 1, rows: 1, class: 'pink-theme', secondary: 'pink-blue', value: 2, isDark: false},
+    {text: 'Purple Green', cols: 1, rows: 1, class: 'purple-theme', secondary: 'purple-green', value: 3, isDark: false},
   ];
 
-  styleTheme: Observable<string>;
-  // only store the 3 non default themes - indigo pink is the default
-  styleThemes = ['deep-purple-amber', 'pink-blue-grey', 'purple-green'];
-  chosenTheme = -1;
-  showGridList = false;
+  // null first entry for default style
+  styleThemes = [ null,
+                  'deep-purple-amber-light-theme',
+                  'pink-blue-grey-light-theme',
+                  'purple-green-light-theme',
+                  'indigo-purple-dark-theme',
+                  'deep-purple-amber-dark-theme',
+                  'pink-blue-grey-dark-theme',
+                  'purple-green-dark-theme'
+                ];
+
+  useDark = false;
+  currentThemeIndex: number;
+  sliderBackground = 'lightgrey';
   constructor(private themeService: ThemeService) { }
 
   ngOnInit() {
-    this.styleTheme = this.themeService.styleClass;
+    this.useDark = this.themeService.isDark;
+    this.currentThemeIndex = this.styleThemes.indexOf(this.themeService.theme);
+    if (this.currentThemeIndex === -1) {
+      this.currentThemeIndex = 0;
+    }
   }
 
   changeTheme(theme: ThemeOption) {
-    this.themeService.setStyleClass(theme.value === -1 ? null : this.styleThemes[theme.value]);
-    this.chosenTheme = theme.value;
+    const themeIndexOffset = this.useDark === false ?
+                    0 :
+                    this.styleThemes.length / 2;
+    this.currentThemeIndex = theme.value + themeIndexOffset;
+    this.themeService.theme = this.styleThemes[this.currentThemeIndex];
+    this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
+  }
+
+  toggleDark() {
+    this.useDark = !this.useDark;
+    const themeIndexOffset = this.styleThemes.length / 2;
+    this.currentThemeIndex = this.useDark ?
+            this.currentThemeIndex + themeIndexOffset :
+            this.currentThemeIndex - themeIndexOffset;
+    this.themeService.isDark = this.useDark;
+    this.themeService.theme = this.styleThemes[this.currentThemeIndex];
+    this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
   }
 }

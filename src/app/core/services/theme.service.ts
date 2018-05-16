@@ -6,7 +6,11 @@ import { Subject } from 'rxjs';
 })
 export class ThemeService {
   private _styleClass: Subject<string> = new Subject<string>();
+
   styleClass = this._styleClass.asObservable();
+
+  isDark = false;
+  theme: string;
 
   constructor() { }
 

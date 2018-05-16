@@ -39,6 +39,7 @@ export class AppNavComponent implements OnInit {
 
   ngOnInit(): void {
       this.themeService.styleClass.subscribe(_ => this.closeOverlay());
+      this.themePickerService.backDropClicked.subscribe(_ => this.overlayRef = null);
   }
 
   handleMenuButtonClick() {
