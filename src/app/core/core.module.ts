@@ -14,9 +14,15 @@ import { MatToolbarModule,
         MatSelectModule,
         MatMenuModule,
         MatGridListModule,
-        MatCardModule } from '@angular/material';
+        MatCardModule,
+      MatCheckboxModule,
+      MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppNavComponent } from 'src/app/app-nav/app-nav.component';
 import { ThemePickerComponent } from 'src/app/theme-picker/theme-picker.component';
+import { ContentComponent } from 'src/app/content/content.component';
 
 @NgModule({
   imports: [
@@ -34,7 +40,12 @@ import { ThemePickerComponent } from 'src/app/theme-picker/theme-picker.componen
     MatMenuModule,
     MatCardModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   exports: [
     CommonModule,
@@ -53,11 +64,18 @@ import { ThemePickerComponent } from 'src/app/theme-picker/theme-picker.componen
     BrowserModule,
     BrowserAnimationsModule,
     AppNavComponent,
-    ThemePickerComponent
+    ThemePickerComponent,
+    FlexLayoutModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    ContentComponent
   ],
   declarations: [
     AppNavComponent,
-    ThemePickerComponent
+    ThemePickerComponent,
+    ContentComponent
 ],
   providers: [ThemeService],
   entryComponents: [ThemePickerComponent]
