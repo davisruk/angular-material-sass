@@ -9,6 +9,7 @@
                     color="accent"
                     value="tile.text"
                     (click)="changeTheme(tile)">
+                    <mat-icon *ngIf="themeChecked(tile.value)">check</mat-icon>
       </button>
     </mat-grid-tile>
     <mat-grid-tile [style.background]="sliderBackground"

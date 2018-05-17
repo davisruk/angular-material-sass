@@ -60,4 +60,9 @@ export class ThemePickerComponent implements OnInit {
     this.themeService.theme = this.styleThemes[this.currentThemeIndex];
     this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
   }
+
+  themeChecked (index: number) {
+    index = this.useDark ? index += this.styleThemes.length / 2 : index;
+    return index === this.currentThemeIndex;
+  }
 }
