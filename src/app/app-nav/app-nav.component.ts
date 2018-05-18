@@ -8,7 +8,7 @@ import { ThemePickerOverlayService, ThemePickerOverlayRef } from '../theme-picke
 import { MatButton } from '@angular/material';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../state/app.state';
-import { UIState } from '../model/ui.model';
+import * as uiReducer from '../state/ui.reducer';
 
 @Component({
   selector: 'app-nav',
@@ -27,8 +27,7 @@ export class AppNavComponent implements OnInit {
   initSideMenu: MenuItem[] = [{title: 'Patients'}, {title: 'Prescriptions'}, {title: 'Stores'}];
   appTitle = 'Material Test';
   overlayRef: ThemePickerOverlayRef;
-  $uiState: Observable<UIState>;
-  currentUIState: UIState;
+  themeCloseState: boolean;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private themePickerService: ThemePickerOverlayService,
@@ -42,10 +41,8 @@ export class AppNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.$uiState = this.store.pipe(select('ui'));
-      this.$uiState.subscribe((next: UIState) => {
-        this.currentUIState = next;
-
+      this.store.select(uiReducer.getThemeState).subscribe(themeState => {
+        this.themeCloseState = themeState.canClose;
         if (this.overlayRef) {
           this.closeOverlay();
         }
@@ -68,7 +65,7 @@ export class AppNavComponent implements OnInit {
   }
 
   closeOverlay() {
-    if (this.currentUIState.themeState.canClose) {
+    if (this.themeCloseState) {
       this.overlayRef.close();
       this.overlayRef = null;
     }

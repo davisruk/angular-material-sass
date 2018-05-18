@@ -2,11 +2,16 @@ import { Action } from '@ngrx/store';
 import { UIState } from '../model/ui.model';
 import { ThemeState } from '../model/theme.state';
 import { ActionWithPayload } from '../core/core.action';
+import { AppState } from './app.state';
 
 export const TOGGLE_DARK = 'UI_THEME_TOGGLE_DARK';
 export const SET_THEME = 'UI_THEME_SET_THEME';
 
-const initialState: UIState = {themeState: {isDark: false, canClose: true, themeName: null}};
+const initialState: UIState = {themeState: {isDark: false, canClose: false, themeName: null}};
+
+export const getThemeNameState = (state: AppState): string => state.ui.themeState.themeName;
+export const getCloseState = (state: AppState): boolean => state.ui.themeState.canClose;
+export const getThemeState = (state: AppState): ThemeState => state.ui.themeState;
 
 export function uiStateReducer (state: UIState = initialState, action: Action) {
     switch (action.type) {

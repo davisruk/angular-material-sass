@@ -4,7 +4,7 @@ import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../state/app.state';
-import { TOGGLE_DARK, SET_THEME} from '../state/ui.state';
+import { TOGGLE_DARK, SET_THEME} from '../state/ui.reducer';
 import { ThemeState } from '../model/theme.state';
 import { UIState } from '../model/ui.model';
 

@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
-import { uiStateReducer } from '../state/ui.state';
+import { uiStateReducer } from '../state/ui.reducer';
 import { MatToolbarModule,
         MatButtonModule,
         MatSidenavModule,

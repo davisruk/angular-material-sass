@@ -8,6 +8,7 @@ interface ThemePickerOverlayConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
+  closeOnClick?: boolean;
 }
 
 const DEFAULT_CONFIG: ThemePickerOverlayConfig = {
