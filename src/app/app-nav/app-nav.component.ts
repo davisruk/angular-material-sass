@@ -4,9 +4,11 @@ import { Observable, Subscription } from 'rxjs';
 import { MenuItem } from '../menu/model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { ThemeService } from '../core/services/theme.service';
 import { ThemePickerOverlayService, ThemePickerOverlayRef } from '../theme-picker/theme-picker-overlay.service';
 import { MatButton } from '@angular/material';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../state/app.state';
+import { UIState } from '../model/ui.model';
 
 @Component({
   selector: 'app-nav',
@@ -25,20 +27,30 @@ export class AppNavComponent implements OnInit {
   initSideMenu: MenuItem[] = [{title: 'Patients'}, {title: 'Prescriptions'}, {title: 'Stores'}];
   appTitle = 'Material Test';
   overlayRef: ThemePickerOverlayRef;
+  $uiState: Observable<UIState>;
+  currentUIState: UIState;
 
   constructor(private breakpointObserver: BreakpointObserver,
               private themePickerService: ThemePickerOverlayService,
-              private themeService: ThemeService) {
+              private store: Store<AppState>) {
     this.isHandSet = this.breakpointObserver.observe(Breakpoints.HandsetPortrait);
-    this.isHandSet.subscribe((state: BreakpointState) => {
-      this.sidebarMenu = state.matches ?
+    this.isHandSet.subscribe((breakState: BreakpointState) => {
+      this.sidebarMenu = breakState.matches ?
         this.initSideMenu.concat(this.toolbarMenu) : this.initSideMenu;
-      this.showToolbarButton = state.matches;
+      this.showToolbarButton = breakState.matches;
     });
   }
 
   ngOnInit(): void {
-      this.themeService.styleClass.subscribe(_ => this.closeOverlay());
+      this.$uiState = this.store.pipe(select('ui'));
+      this.$uiState.subscribe((next: UIState) => {
+        this.currentUIState = next;
+
+        if (this.overlayRef) {
+          this.closeOverlay();
+        }
+      });
+
       this.themePickerService.backDropClicked.subscribe(_ => this.overlayRef = null);
   }
 
@@ -56,7 +68,7 @@ export class AppNavComponent implements OnInit {
   }
 
   closeOverlay() {
-    if (this.themeService.canClose) {
+    if (this.currentUIState.themeState.canClose) {
       this.overlayRef.close();
       this.overlayRef = null;
     }

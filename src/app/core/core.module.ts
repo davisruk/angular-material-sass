@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from 'src/app/core/services/theme.service';
 import { LayoutModule } from '@angular/cdk/layout';
+import { StoreModule } from '@ngrx/store';
+import { uiStateReducer } from '../state/ui.state';
 import { MatToolbarModule,
         MatButtonModule,
         MatSidenavModule,
@@ -45,7 +46,8 @@ import { ContentComponent } from 'src/app/content/content.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    StoreModule.forRoot({ ui: uiStateReducer })
   ],
   exports: [
     CommonModule,
@@ -77,7 +79,7 @@ import { ContentComponent } from 'src/app/content/content.component';
     ThemePickerComponent,
     ContentComponent
 ],
-  providers: [ThemeService],
+  providers: [],
   entryComponents: [ThemePickerComponent]
 })
 export class CoreModule { }

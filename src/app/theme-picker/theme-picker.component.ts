@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ThemeService } from '../core/services/theme.service';
 import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../state/app.state';
+import { TOGGLE_DARK, SET_THEME} from '../state/ui.state';
+import { ThemeState } from '../model/theme.state';
+import { UIState } from '../model/ui.model';
 
 @Component({
   selector: 'app-theme-picker',
@@ -31,12 +35,13 @@ export class ThemePickerComponent implements OnInit {
   useDark = false;
   currentThemeIndex: number;
   sliderBackground = 'lightgrey';
-
-  constructor(private themeService: ThemeService) { }
+  uiState: UIState;
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.useDark = this.themeService.isDark;
-    this.currentThemeIndex = this.styleThemes.indexOf(this.themeService.theme);
+    this.store.pipe(select('ui')).subscribe((uiState: UIState) => { this.uiState = uiState; });
+    this.useDark = this.uiState.themeState.isDark;
+    this.currentThemeIndex = this.styleThemes.indexOf(this.uiState.themeState.themeName);
     if (this.currentThemeIndex === -1) {
       this.currentThemeIndex = 0;
     }
@@ -47,9 +52,7 @@ export class ThemePickerComponent implements OnInit {
                     0 :
                     this.styleThemes.length / 2;
     this.currentThemeIndex = theme.value + themeIndexOffset;
-    this.themeService.theme = this.styleThemes[this.currentThemeIndex];
-    this.themeService.canClose = true;
-    this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
+    this.notifyStateChange(SET_THEME);
   }
 
   toggleDark() {
@@ -58,10 +61,16 @@ export class ThemePickerComponent implements OnInit {
     this.currentThemeIndex = this.useDark ?
             this.currentThemeIndex + themeIndexOffset :
             this.currentThemeIndex - themeIndexOffset;
-    this.themeService.isDark = this.useDark;
-    this.themeService.theme = this.styleThemes[this.currentThemeIndex];
-    this.themeService.canClose = false;
-    this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
+    this.notifyStateChange(TOGGLE_DARK);
+  }
+
+  notifyStateChange(actionType: string) {
+    const newState: ThemeState = {
+      isDark: this.useDark,
+      canClose: false, // change to true if you want the overlay to close on any state change
+      themeName: this.styleThemes[this.currentThemeIndex]
+    };
+    this.store.dispatch({type: actionType, payload: newState});
   }
 
   themeChecked (index: number) {
