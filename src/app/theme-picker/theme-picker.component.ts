@@ -31,6 +31,7 @@ export class ThemePickerComponent implements OnInit {
   useDark = false;
   currentThemeIndex: number;
   sliderBackground = 'lightgrey';
+
   constructor(private themeService: ThemeService) { }
 
   ngOnInit() {
@@ -47,6 +48,7 @@ export class ThemePickerComponent implements OnInit {
                     this.styleThemes.length / 2;
     this.currentThemeIndex = theme.value + themeIndexOffset;
     this.themeService.theme = this.styleThemes[this.currentThemeIndex];
+    this.themeService.canClose = true;
     this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
   }
 
@@ -58,6 +60,7 @@ export class ThemePickerComponent implements OnInit {
             this.currentThemeIndex - themeIndexOffset;
     this.themeService.isDark = this.useDark;
     this.themeService.theme = this.styleThemes[this.currentThemeIndex];
+    this.themeService.canClose = false;
     this.themeService.setStyleClass(this.styleThemes[this.currentThemeIndex]);
   }
 

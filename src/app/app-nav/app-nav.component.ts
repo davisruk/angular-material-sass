@@ -56,7 +56,9 @@ export class AppNavComponent implements OnInit {
   }
 
   closeOverlay() {
-    this.overlayRef.close();
-    this.overlayRef = null;
+    if (this.themeService.canClose) {
+      this.overlayRef.close();
+      this.overlayRef = null;
+    }
   }
 }

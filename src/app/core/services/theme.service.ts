@@ -11,8 +11,11 @@ export class ThemeService {
 
   isDark = false;
   theme: string;
+  canClose: boolean;
 
-  constructor() { }
+  constructor() {
+    this.canClose = true;
+  }
 
   setStyleClass(styleClass: string) {
     this._styleClass.next(styleClass);
