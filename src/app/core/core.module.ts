@@ -33,6 +33,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AuthEffects } from '../state/effects/auth-effects';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '../state/app.state';
+import { AuthGuardService } from '../services/auth-guard.service';
 
 @NgModule({
   imports: [
@@ -63,7 +64,7 @@ import { reducers } from '../state/app.state';
       { path: 'log-in', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: '', component: LandingComponent },
-      { path: 'content', component: MainContentComponent },
+      { path: 'content', component: MainContentComponent, canActivate: [AuthGuardService] },
       { path: '**', redirectTo: '/'}
     ])
   ],
