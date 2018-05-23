@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MatToolbarModule,
          MatButtonModule,
          MatSidenavModule,
@@ -34,6 +35,7 @@ import { AuthEffects } from '../state/effects/auth-effects';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '../state/app.state';
 import { AuthGuardService } from '../services/auth-guard.service';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
@@ -59,6 +61,10 @@ import { AuthGuardService } from '../services/auth-guard.service';
     MatNativeDateModule,
     MatInputModule,
     StoreModule.forRoot(reducers, {}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     EffectsModule.forRoot([AuthEffects]),
     RouterModule.forRoot([
       { path: 'log-in', component: LoginComponent },
