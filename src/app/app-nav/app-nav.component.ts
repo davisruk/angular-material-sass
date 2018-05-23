@@ -7,7 +7,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemePickerOverlayService, ThemePickerOverlayRef } from '../theme-picker/theme-picker-overlay.service';
 import { MatButton } from '@angular/material';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../state/app.state';
+import { AppState, selectThemeCanCloseState } from '../state/app.state';
 import * as uiReducer from '../state/ui.reducer';
 
 @Component({
@@ -41,8 +41,8 @@ export class AppNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.store.select(uiReducer.getThemeState).subscribe(themeState => {
-        this.themeCloseState = themeState.canClose;
+      this.store.select(selectThemeCanCloseState).subscribe(canClose => {
+        this.themeCloseState = canClose;
         if (this.overlayRef) {
           this.closeOverlay();
         }

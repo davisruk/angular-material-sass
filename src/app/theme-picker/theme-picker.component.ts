@@ -3,10 +3,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
 import { Store, select } from '@ngrx/store';
-import { AppState, selectUIState } from '../state/app.state';
+import { AppState, selectUIState, selectThemeState } from '../state/app.state';
 import { TOGGLE_DARK, SET_THEME} from '../state/ui.reducer';
 import { ThemeState } from '../model/theme.state';
 import { UIState } from '../model/ui.model';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-theme-picker',
@@ -35,16 +36,18 @@ export class ThemePickerComponent implements OnInit {
   useDark = false;
   currentThemeIndex: number;
   sliderBackground = 'lightgrey';
-  uiState: UIState;
-  constructor(private store: Store<AppState>) { }
+
+  constructor(private store: Store<AppState>) {
+      this.currentThemeIndex = 0;
+  }
 
   ngOnInit() {
-    this.store.select(selectUIState).subscribe((uiState: UIState) => { this.uiState = uiState; });
-    this.useDark = this.uiState.themeState.isDark;
-    this.currentThemeIndex = this.styleThemes.indexOf(this.uiState.themeState.themeName);
-    if (this.currentThemeIndex === -1) {
-      this.currentThemeIndex = 0;
-    }
+
+    this.store.select(selectThemeState).subscribe((themeState) => {
+      this.useDark = themeState.isDark;
+      this.currentThemeIndex = this.styleThemes.indexOf(themeState.themeName);
+    });
+
   }
 
   changeTheme(theme: ThemeOption) {
