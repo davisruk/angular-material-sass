@@ -3,8 +3,10 @@ import { User } from '../../model/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../state/app.state';
+import { AppState, selectAuthState } from '../../state/app.state';
 import { Login } from '../../state/actions/auth-actions';
+import { Observable } from 'rxjs';
+import { AuthenticationState } from '../../state/authentication-state';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +16,17 @@ import { Login } from '../../state/actions/auth-actions';
 export class LoginComponent implements OnInit {
 
   user: User;
-  constructor(private store: Store<AppState>) { }
+  authState: Observable<AuthenticationState>;
+  errorMessage: string | null;
+  constructor(private store: Store<AppState>) {
+    this.authState = store.select(selectAuthState);
+  }
 
   ngOnInit() {
     this.user = new User();
+    this.authState.subscribe((state) => {
+      this.errorMessage = state.errorMessage;
+    });
   }
 
   onSubmit () {

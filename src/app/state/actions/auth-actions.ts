@@ -11,9 +11,15 @@ export class Login implements Action {
     constructor (public payload: any) {}
 }
 
+export class LoginSuccessPayload {
+    token: string;
+    email: string;
+}
+
+
 export class LoginSuccess implements Action {
     readonly type: string = AuthActionTypes.LOGIN_SUCCESS;
-    constructor (public payload: any) {}
+    constructor (public payload: LoginSuccessPayload) {}
 }
 
 export class LoginFailure implements Action {

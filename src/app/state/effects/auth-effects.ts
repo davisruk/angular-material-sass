@@ -4,7 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
-import { AuthActionTypes, Login, LoginSuccess, LoginFailure } from '../actions/auth-actions';
+import { AuthActionTypes, Login, LoginSuccess, LoginFailure, LoginSuccessPayload } from '../actions/auth-actions';
 
 @Injectable()
 export class AuthEffects {
@@ -14,6 +14,8 @@ export class AuthEffects {
         private router: Router
     ) {}
 
+    // ngrx effects listen for actions from the Store, perform some
+    // logic then dispatch a new action
     // Component -> Action -> Effect -> Reducer -> Store -> Component
     @Effect()
     Login$: Observable<any> = this.actions
@@ -34,9 +36,10 @@ export class AuthEffects {
 
     @Effect({ dispatch: false })
     LoginSuccess$: Observable<any> = this.actions
-        .pipe(ofType(AuthActionTypes.LOGIN_SUCCESS),
-                tap((user) => {
-                    localStorage.setItem('token', user.payload.token);
+            .ofType(AuthActionTypes.LOGIN_SUCCESS)
+            .pipe( map((action: LoginSuccess) => action.payload),
+                tap((payload) => {
+                    localStorage.setItem('token', payload.token);
                     this.router.navigateByUrl('/content');
                 }));
 
