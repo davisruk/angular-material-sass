@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../state/app.state';
+import { AppState, selectUIState } from '../state/app.state';
 import { TOGGLE_DARK, SET_THEME} from '../state/ui.reducer';
 import { ThemeState } from '../model/theme.state';
 import { UIState } from '../model/ui.model';
@@ -39,7 +39,7 @@ export class ThemePickerComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.store.pipe(select('ui')).subscribe((uiState: UIState) => { this.uiState = uiState; });
+    this.store.select(selectUIState).subscribe((uiState: UIState) => { this.uiState = uiState; });
     this.useDark = this.uiState.themeState.isDark;
     this.currentThemeIndex = this.styleThemes.indexOf(this.uiState.themeState.themeName);
     if (this.currentThemeIndex === -1) {

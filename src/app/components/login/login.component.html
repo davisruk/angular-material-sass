@@ -1,4 +1,4 @@
-<div container style="min-height: 100vh" fxLayout fxLayoutAlign="center center">
+<div container style="min-height: 90vh" fxLayout fxLayoutAlign="center center">
   <form>
     <mat-card fxFlex="50">
       <mat-card-title>Login</mat-card-title>
@@ -10,9 +10,9 @@
           <input matInput required type="password" name="password" placeholder="Password" [(ngModel)]="user.password">
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
-        <a mat-raised-button color="primary" routerLink="/">Cancel</a>
-        <div *ngIf="errorMessage">
-          <span class="warnText">{{errorMessage}}</span>
+        <a mat-raised-button color="primary" (click)="onCancel()" routerLink="/">Cancel</a>
+        <div *ngIf="errorMessage$">
+          <span class="warnText">{{errorMessage$ | async}}</span>
         </div>    
         </mat-card-content>
     </mat-card>

@@ -1,5 +1,5 @@
 import { User } from '../model/user.model';
-import { AppState } from './app.state';
+import { createSelector } from '@ngrx/store';
 
 export class AuthenticationState {
     user: User;
@@ -7,7 +7,9 @@ export class AuthenticationState {
     errorMessage: string;
 }
 
-export const getErrorState = (state: AppState): string => state.authenticationState.errorMessage;
+export const getErrorMessage = (state: AuthenticationState) => state.errorMessage;
+export const isAuthenticated = (state: AuthenticationState) => state.authenticated;
+export const getUser = (state: AuthenticationState) => state.user;
 
 export const initialState: AuthenticationState = {
     user: null,

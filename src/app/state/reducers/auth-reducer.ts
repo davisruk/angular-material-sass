@@ -13,6 +13,9 @@ export function reducer (state = initialState, action: All): AuthenticationState
         case AuthActionTypes.LOGIN_FAILURE: {
             return {...state, user: null, authenticated: false, errorMessage: 'Incorrect email and / or password'};
         }
+        case AuthActionTypes.LOGIN_CANCEL: {
+            return initialState;
+        }
         default: {
             return state;
         }
