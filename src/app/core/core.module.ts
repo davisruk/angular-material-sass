@@ -6,26 +6,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
-import { uiStateReducer } from '../state/ui.reducer';
 import { MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatSlideToggleModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatMenuModule,
-        MatGridListModule,
-        MatCardModule,
-      MatCheckboxModule,
-      MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule} from '@angular/material';
+         MatButtonModule,
+         MatSidenavModule,
+         MatIconModule,
+         MatListModule,
+         MatSlideToggleModule,
+         MatFormFieldModule,
+         MatSelectModule,
+         MatMenuModule,
+         MatGridListModule,
+         MatCardModule,
+         MatCheckboxModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
+         MatInputModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppNavComponent } from 'src/app/app-nav/app-nav.component';
-import { ThemePickerComponent } from 'src/app/theme-picker/theme-picker.component';
-import { ContentComponent } from 'src/app/content/content.component';
+import { AppNavComponent } from 'src/app/components/app-nav/app-nav.component';
+import { ThemePickerComponent } from 'src/app/components/theme-picker/theme-picker.component';
+import { ContentComponent } from 'src/app/components/content/content.component';
 import { LoginComponent } from '../components/login/login.component';
 import { SignUpComponent } from '../components/sign-up/sign-up.component';
 import { LandingComponent } from '../components/landing/landing.component';

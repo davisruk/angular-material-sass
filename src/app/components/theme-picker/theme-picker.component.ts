@@ -3,11 +3,10 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ThemeOption } from './theme-option';
 import { ThemePickerOverlayRef, ThemePickerOverlayService } from './theme-picker-overlay.service';
 import { Store, select } from '@ngrx/store';
-import { AppState, selectUIState, selectThemeState } from '../state/app.state';
-import { TOGGLE_DARK, SET_THEME} from '../state/ui.reducer';
-import { ThemeState } from '../model/theme.state';
-import { UIState } from '../model/ui.model';
-import { tap } from 'rxjs/operators';
+import { AppState, selectUIState, selectThemeState } from '../../state/app.state';
+import { TOGGLE_DARK, SET_THEME} from '../../state/reducers/ui.reducer';
+import { ThemeState } from '../../state/theme.state';
+import { UIState } from '../../state/ui.state';
 
 @Component({
   selector: 'app-theme-picker',

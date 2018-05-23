@@ -1,14 +1,14 @@
 import { Component, ElementRef, ViewChild, OnInit, HostBinding } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
-import { MenuItem } from '../menu/model/menu-item.model';
+import { MenuItem } from '../../model/menu-item.model';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ThemePickerOverlayService, ThemePickerOverlayRef } from '../theme-picker/theme-picker-overlay.service';
 import { MatButton } from '@angular/material';
 import { Store, select } from '@ngrx/store';
-import { AppState, selectThemeCanCloseState } from '../state/app.state';
-import * as uiReducer from '../state/ui.reducer';
+import { AppState, selectThemeCanCloseState } from '../../state/app.state';
+import * as uiReducer from '../../state/reducers/ui.reducer';
 
 @Component({
   selector: 'app-nav',

@@ -1,10 +1,10 @@
-import { UIState } from '../model/ui.model';
+import { UIState } from '../state/ui.state';
 import { AuthenticationState } from './authentication-state';
 import * as auth from './reducers/auth-reducer';
-import * as ui from './ui.reducer';
+import * as ui from './reducers/ui.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromAuthState from './authentication-state';
-import * as fromUIState from '../model/ui.model';
+import * as fromUIState from '../state/ui.state';
 
 export interface AppState {
     ui: UIState;

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, selectThemeNameState } from '../../state/app.state';
-import * as UIState from '../../state/ui.reducer';
 
 @Component({
   selector: 'app-landing',
