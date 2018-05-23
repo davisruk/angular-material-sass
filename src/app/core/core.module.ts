@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -24,10 +26,19 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppNavComponent } from 'src/app/app-nav/app-nav.component';
 import { ThemePickerComponent } from 'src/app/theme-picker/theme-picker.component';
 import { ContentComponent } from 'src/app/content/content.component';
+import { LoginComponent } from '../components/login/login.component';
+import { SignUpComponent } from '../components/sign-up/sign-up.component';
+import { LandingComponent } from '../components/landing/landing.component';
+import { MainContentComponent } from '../components/main-content/main-content.component';
+import { AuthenticationService } from '../services/authentication.service';
+import { AuthEffects } from '../state/effects/auth-effects';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from '../state/app.state';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
@@ -47,10 +58,20 @@ import { ContentComponent } from 'src/app/content/content.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    StoreModule.forRoot({ ui: uiStateReducer })
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
+    RouterModule.forRoot([
+      { path: 'log-in', component: LoginComponent },
+      { path: 'sign-up', component: SignUpComponent },
+      { path: '', component: LandingComponent },
+      { path: 'content', component: MainContentComponent },
+      { path: '**', redirectTo: '/'}
+    ])
   ],
   exports: [
     CommonModule,
+    FormsModule,
+    RouterModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
@@ -66,7 +87,9 @@ import { ContentComponent } from 'src/app/content/content.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppNavComponent,
+    LandingComponent,
     ThemePickerComponent,
+    MainContentComponent,
     FlexLayoutModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -77,7 +100,11 @@ import { ContentComponent } from 'src/app/content/content.component';
   declarations: [
     AppNavComponent,
     ThemePickerComponent,
-    ContentComponent
+    ContentComponent,
+    LandingComponent,
+    LoginComponent,
+    SignUpComponent,
+    MainContentComponent
 ],
   providers: [],
   entryComponents: [ThemePickerComponent]
