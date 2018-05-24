@@ -25,7 +25,7 @@ export class AppNavComponent implements OnInit {
   sidebarMenu: MenuItem[];
   toolbarMenu: MenuItem[] = [{title: 'Documentation'}, {title: 'About'}];
   initSideMenu: MenuItem[] = [{title: 'Patients'}, {title: 'Prescriptions'}, {title: 'Stores'}];
-  appTitle = 'Material Test';
+  appTitle = 'Material App';
   overlayRef: ThemePickerOverlayRef;
   themeCloseState: boolean;
 
