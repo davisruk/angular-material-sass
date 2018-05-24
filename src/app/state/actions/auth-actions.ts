@@ -4,16 +4,10 @@ export enum AuthActionTypes {
     LOGIN = '[Auth] Login',
     LOGIN_SUCCESS = '[Auth] Login Success',
     LOGIN_FAILURE = '[Auth] Login Failure',
-    LOGIN_CANCEL = '[Auth] Login Cancel',
 }
 
 export class Login implements Action {
     readonly type: string = AuthActionTypes.LOGIN;
-    constructor (public payload: any) {}
-}
-
-export class LoginCancel implements Action {
-    readonly type: string = AuthActionTypes.LOGIN_CANCEL;
     constructor (public payload: any) {}
 }
 
@@ -31,4 +25,4 @@ export class LoginFailure implements Action {
     constructor (public payload: any) {}
 }
 
-export type All = | Login | LoginSuccess | LoginFailure | LoginCancel;
+export type All = | Login | LoginSuccess | LoginFailure;

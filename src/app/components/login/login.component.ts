@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState, selectAuthState, selectAuthError } from '../../state/app.state';
-import { Login, LoginCancel } from '../../state/actions/auth-actions';
+import { Login } from '../../state/actions/auth-actions';
 import { Observable } from 'rxjs';
 import { AuthenticationState } from '../../state/authentication-state';
 
@@ -34,9 +34,4 @@ export class LoginComponent implements OnInit {
 
     this.store.dispatch(new Login(payload));
   }
-
-  onCancel () {
-    this.store.dispatch(new LoginCancel({}));
-  }
-
 }

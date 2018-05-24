@@ -21,6 +21,7 @@ import { MatToolbarModule,
          MatCheckboxModule,
          MatDatepickerModule,
          MatNativeDateModule,
+         MatDividerModule,
          MatInputModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppNavComponent } from 'src/app/components/app-nav/app-nav.component';
@@ -60,6 +61,7 @@ import { environment } from '../../environments/environment';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
+    MatDividerModule,
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -70,8 +72,14 @@ import { environment } from '../../environments/environment';
       { path: 'log-in', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: '', component: LandingComponent },
-      { path: 'content', component: MainContentComponent, canActivate: [AuthGuardService] },
-      { path: '**', redirectTo: '/'}
+      { path: 'content', component: MainContentComponent, canActivate: [AuthGuardService],
+      // all app routes should go as children off Main Content to keep the side panel and nav bar eg.
+      // children: [
+        //  { path: 'patients', component: PatientListComponent },
+        //  { path: 'prescriptions', component: PrescriptionListComponent }
+      // ]
+     },
+      { path: '**', redirectTo: 'content'}
     ])
   ],
   exports: [
@@ -84,6 +92,7 @@ import { environment } from '../../environments/environment';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatDividerModule,
     MatSlideToggleModule,
     MatFormFieldModule,
     MatSelectModule,
