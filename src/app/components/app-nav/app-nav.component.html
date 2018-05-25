@@ -1,20 +1,11 @@
 <mat-sidenav-container fullscreen>
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport="true"
-    [attr.role]="isHandSet ? 'dialog' : 'navigation'"
-    [mode]="(isHandSet | async)!.matches ? 'over' : 'side'"
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="isHandSet ? 'dialog' : 'navigation'" [mode]="(isHandSet | async)!.matches ? 'over' : 'side'"
     [opened]="!(isHandSet | async)!.matches">
 
     <!-- Sidebar Section that covers the left
           hand side of the main Toolbar -->
     <mat-toolbar color="primary">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="handleMenuButtonClick()">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="handleMenuButtonClick()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       {{appTitle}}
@@ -27,27 +18,25 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="handleMenuButtonClick()"
-        *ngIf="showToolbarButton">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="handleMenuButtonClick()" *ngIf="showToolbarButton">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div *ngIf="showToolbarButton">
         {{appTitle}}
       </div>
       <div *ngIf="!(isHandSet | async)!.matches">
-          <a  *ngFor="let menuItem of toolbarMenu" mat-button href='#'>{{menuItem.title}}</a>
+        <a *ngFor="let menuItem of toolbarMenu" mat-button href='#'>{{menuItem.title}}</a>
       </div>
       <span class="fill-space"></span>
       <button #themeButton mat-icon-button (click)="toggleThemePicker()">
         <mat-icon>format_paint</mat-icon>
       </button>
+      <button #logoutButton mat-icon-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
     </mat-toolbar>
 
-<!-- content and routing should go here -->
+    <!-- content and routing should go here -->
     <app-content></app-content>
 
   </mat-sidenav-content>

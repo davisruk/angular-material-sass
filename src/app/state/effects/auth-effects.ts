@@ -9,7 +9,9 @@ import {
   Login,
   LoginSuccess,
   LoginFailure,
-  LoginSuccessPayload
+  LoginSuccessPayload,
+  Logout,
+  LogoutSuccess
 } from '../actions/auth-actions';
 
 @Injectable()
@@ -61,5 +63,21 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   LoginFailure$: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE)
+  );
+
+  @Effect()
+  Logout$: Observable<any> = this.actions.ofType(AuthActionTypes.LOGOUT).pipe(
+    map((action: Logout) => {
+      localStorage.removeItem('token');
+      return new LogoutSuccess({});
+    })
+  );
+
+  @Effect({ dispatch: false })
+  LogoutSuccess$: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.LOGOUT_SUCCESS),
+    map((action: LogoutSuccess) => {
+      this.router.navigateByUrl('');
+    })
   );
 }

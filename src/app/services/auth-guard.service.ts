@@ -22,7 +22,6 @@ export class AuthGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
-    /*
     return this.store.select(selectAuthenticated).pipe(
       map(auth => {
         if (!auth) {
@@ -35,7 +34,5 @@ export class AuthGuardService implements CanActivate {
         return auth;
       })
     );
-*/
-    return this.store.select(selectAuthenticated);
   }
 }
