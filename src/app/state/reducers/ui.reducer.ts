@@ -4,8 +4,8 @@ import { ThemeState } from '../theme.state';
 import { ActionWithPayload } from '../../core/core.action';
 import { AppState } from '../app.state';
 
-export const TOGGLE_DARK = 'UI_THEME_TOGGLE_DARK';
-export const SET_THEME = 'UI_THEME_SET_THEME';
+export const TOGGLE_DARK = '[Theme] Toggle Dark';
+export const SET_THEME = '[Theme] Set Theme';
 const initialState: UIState = {themeState: {isDark: false, canClose: false, themeName: null}};
 
 export function uiStateReducer (state: UIState = initialState, action: Action) {

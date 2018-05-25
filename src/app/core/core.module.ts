@@ -7,22 +7,24 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MatToolbarModule,
-         MatButtonModule,
-         MatSidenavModule,
-         MatIconModule,
-         MatListModule,
-         MatSlideToggleModule,
-         MatFormFieldModule,
-         MatSelectModule,
-         MatMenuModule,
-         MatGridListModule,
-         MatCardModule,
-         MatCheckboxModule,
-         MatDatepickerModule,
-         MatNativeDateModule,
-         MatDividerModule,
-         MatInputModule} from '@angular/material';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatListModule,
+  MatSlideToggleModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatMenuModule,
+  MatGridListModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatDividerModule,
+  MatInputModule
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppNavComponent } from 'src/app/components/app-nav/app-nav.component';
 import { ThemePickerComponent } from 'src/app/components/theme-picker/theme-picker.component';
@@ -37,6 +39,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '../state/app.state';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { environment } from '../../environments/environment';
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer
+} from '@ngrx/router-store';
+import { RouterCustomSerializer } from '../state/router.state';
+import { RouterEffects } from '../state/effects/nav-effects';
 
 @NgModule({
   imports: [
@@ -65,22 +73,26 @@ import { environment } from '../../environments/environment';
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
+      logOnly: environment.production // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RouterEffects]),
     RouterModule.forRoot([
       { path: 'log-in', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: '', component: LandingComponent },
-      { path: 'content', component: MainContentComponent, canActivate: [AuthGuardService],
-      // all app routes should go as children off Main Content to keep the side panel and nav bar eg.
-      // children: [
+      {
+        path: 'content',
+        component: MainContentComponent,
+        canActivate: [AuthGuardService]
+        // all app routes should go as children off Main Content to keep the side panel and nav bar eg.
+        // children: [
         //  { path: 'patients', component: PatientListComponent },
         //  { path: 'prescriptions', component: PrescriptionListComponent }
-      // ]
-     },
-      { path: '**', redirectTo: 'content'}
-    ])
+        // ]
+      },
+      { path: '**', redirectTo: 'content' }
+    ]),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' })
   ],
   exports: [
     CommonModule,
@@ -120,8 +132,10 @@ import { environment } from '../../environments/environment';
     LoginComponent,
     SignUpComponent,
     MainContentComponent
-],
-  providers: [],
+  ],
+  providers: [
+    { provide: RouterStateSerializer, useClass: RouterCustomSerializer }
+  ],
   entryComponents: [ThemePickerComponent]
 })
-export class CoreModule { }
+export class CoreModule {}
